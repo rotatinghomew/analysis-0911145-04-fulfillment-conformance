@@ -1,0 +1,269 @@
+{
+  "orders": [
+    {
+      "id": "o1",
+      "units": 10,
+      "merchant": "m1"
+    },
+    {
+      "id": "o2",
+      "units": 6,
+      "merchant": "m2"
+    }
+  ],
+  "parcels": [
+    {
+      "id": "p1",
+      "units": 6
+    },
+    {
+      "id": "p2",
+      "units": 4
+    },
+    {
+      "id": "p3",
+      "units": 6
+    },
+    {
+      "id": "p4",
+      "units": 4
+    }
+  ],
+  "trucks": [
+    {
+      "id": "t1"
+    },
+    {
+      "id": "t2"
+    }
+  ],
+  "links": [
+    {
+      "kind": "split",
+      "source": "o1",
+      "target": "p1",
+      "units": 6
+    },
+    {
+      "kind": "split",
+      "source": "o1",
+      "target": "p2",
+      "units": 4
+    },
+    {
+      "kind": "split",
+      "source": "o2",
+      "target": "p3",
+      "units": 6
+    },
+    {
+      "kind": "replacement",
+      "source": "p2",
+      "target": "p4",
+      "units": 4
+    },
+    {
+      "kind": "truck",
+      "source": "p1",
+      "target": "t1"
+    },
+    {
+      "kind": "truck",
+      "source": "p2",
+      "target": "t1"
+    },
+    {
+      "kind": "truck",
+      "source": "p3",
+      "target": "t1"
+    },
+    {
+      "kind": "truck",
+      "source": "p4",
+      "target": "t2"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "e12",
+      "activity": "delivered",
+      "objects": [
+        "p4"
+      ],
+      "occurred": [
+        18,
+        18
+      ],
+      "received_at": 19
+    },
+    {
+      "event_id": "e11",
+      "activity": "departed",
+      "objects": [
+        "t2"
+      ],
+      "occurred": [
+        14,
+        14
+      ],
+      "received_at": 15
+    },
+    {
+      "event_id": "e10",
+      "activity": "packed",
+      "objects": [
+        "p4"
+      ],
+      "occurred": [
+        12,
+        13
+      ],
+      "received_at": 14
+    },
+    {
+      "event_id": "e9",
+      "activity": "replacement_authorized",
+      "objects": [
+        "p2",
+        "p4"
+      ],
+      "occurred": [
+        11,
+        11
+      ],
+      "received_at": 12
+    },
+    {
+      "event_id": "e8",
+      "activity": "delivered",
+      "objects": [
+        "p3"
+      ],
+      "occurred": [
+        10,
+        10
+      ],
+      "received_at": 11
+    },
+    {
+      "event_id": "e7",
+      "activity": "damaged",
+      "objects": [
+        "p2"
+      ],
+      "occurred": [
+        9,
+        10
+      ],
+      "received_at": 11
+    },
+    {
+      "event_id": "e6",
+      "activity": "delivered",
+      "objects": [
+        "p1"
+      ],
+      "occurred": [
+        9,
+        9
+      ],
+      "received_at": 10
+    },
+    {
+      "event_id": "e5",
+      "activity": "departed",
+      "objects": [
+        "t1"
+      ],
+      "occurred": [
+        4,
+        6
+      ],
+      "received_at": 7
+    },
+    {
+      "event_id": "e4",
+      "activity": "packed",
+      "objects": [
+        "p3"
+      ],
+      "occurred": [
+        3,
+        4
+      ],
+      "received_at": 5
+    },
+    {
+      "event_id": "e3",
+      "activity": "packed",
+      "objects": [
+        "p2"
+      ],
+      "occurred": [
+        3,
+        5
+      ],
+      "received_at": 6
+    },
+    {
+      "event_id": "e2",
+      "activity": "packed",
+      "objects": [
+        "p1"
+      ],
+      "occurred": [
+        2,
+        4
+      ],
+      "received_at": 5
+    },
+    {
+      "event_id": "e1",
+      "activity": "accepted",
+      "objects": [
+        "o2"
+      ],
+      "occurred": [
+        1,
+        1
+      ],
+      "received_at": 2
+    },
+    {
+      "event_id": "e0",
+      "activity": "accepted",
+      "objects": [
+        "o1"
+      ],
+      "occurred": [
+        1,
+        1
+      ],
+      "received_at": 2
+    }
+  ],
+  "cutoff": 20,
+  "rules": {
+    "allowed": {
+      "order": [
+        "accepted"
+      ],
+      "parcel": [
+        "packed",
+        "delivered",
+        "damaged",
+        "replacement_authorized"
+      ],
+      "truck": [
+        "departed"
+      ]
+    },
+    "quantity_policy": "replacement_consumes_failed_units",
+    "required": [
+      "accepted_before_pack",
+      "pack_before_departure",
+      "depart_before_delivery"
+    ],
+    "parallel": "different_parcels_may_overlap"
+  }
+}
