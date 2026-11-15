@@ -1,6 +1,6 @@
 # 拆合包裹和补发交织时的履约流程符合性分析
 
-这是一个本地运行的分析工作台。当前版本提供业务数据检查、已有口径的预览、HTTP 查询及 Python 消费端；新的分析入口尚待接入。字段的业务含义与兼容边界见 `docs/contracts.md`，验证范围见 `docs/verification.md`。
+这是一个本地运行的分析工作台。当前版本提供业务数据检查、已有口径的预览、流程符合性分析、HTTP 查询及 Python 消费端。字段的业务含义与兼容边界见 `docs/contracts.md`，验证范围见 `docs/verification.md`。
 
 数据均为本地合成，不含真实姓名、电话号码或生产系统凭据。`standard` 是常规资料，`edge` 用于检查信息不足或约束冲突。它们只描述观测，不预设分析结论。
 
@@ -27,4 +27,4 @@ docker run --rm --network none local/fulfillment-conformance:baseline python -m 
 docker run --rm --network none local/fulfillment-conformance:baseline
 ```
 
-准备阶段允许构建镜像和预装依赖；正式演示不进行构建或安装。默认演示只显示已有功能。新能力完成后，请使演示通过实际 HTTP 消费调用展示输入口径、分析结果和限制，保留完整输出；小样本预期在 90 秒内结束。功能测试启用方式：`RUN_ACCEPTANCE=1 python -m unittest tests.test_acceptance -v`，初始版本未提供新接口，故默认跳过这些测试。
+准备阶段允许构建镜像和预装依赖；正式演示不进行构建或安装。演示在预览之外，通过实际 HTTP 消费 `POST /conformance` 展示输入口径（case 与 cutoff）、逐订单判定、商户聚合、共享事件与截尾限制，保留完整输出；小样本预期在 90 秒内结束。功能测试启用方式：`RUN_ACCEPTANCE=1 python -m unittest tests.test_acceptance -v`。

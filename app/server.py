@@ -3,6 +3,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
 
 from app.store import load_case, names
+from app.conformance import conformance
 from app.fulfillment import preview
 
 
@@ -33,10 +34,13 @@ class Handler(BaseHTTPRequestHandler):
                 raise ValueError('invalid body size')
             request = json.loads(self.rfile.read(length))
             case = load_case(request['case'])
-            if urlsplit(self.path).path != '/preview':
+            route = urlsplit(self.path).path
+            if route == '/preview':
+                self.send_json(200, preview(case))
+            elif route == '/conformance':
+                self.send_json(200, conformance(case, request.get('cutoff')))
+            else:
                 self.send_json(404, {'error': 'unknown route'})
-                return
-            self.send_json(200, preview(case))
         except (ValueError, KeyError, TypeError) as error:
             self.send_json(400, {'error': str(error)})
 
